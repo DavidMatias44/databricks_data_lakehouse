@@ -9,3 +9,11 @@ A modern implementation of a Data Lakehouse in Databricks.
 This project follows Medallion Architecture:
 
 ![Architecture](docs/architecture.png)
+
+## Details
+
+### Data directory
+
+This directory contains all the CSV files used by this project. I decided to include those files (~5.4MB) to improve the project's reproducibility. The `src/00_prepare_data.py` script automatically copies the CSV files into the Unity Catalog Volume created by the `ddl/init_lakehouse.sql` script in order to avoid manual upload.
+
+> I know this is not a common practice, but I wanted to make this project as reproducible as possible.
