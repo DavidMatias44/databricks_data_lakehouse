@@ -10,6 +10,12 @@ This project follows Medallion Architecture:
 
 ![Architecture](docs/architecture.png)
 
+## Data flow
+
+Diagram to visualize where the data came from, and how it *flows* through the different layers.
+
+![Data_Flow](docs/data_flow.png)
+
 ## Details
 
 ### Data directory
