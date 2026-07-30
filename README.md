@@ -16,6 +16,12 @@ Diagram to visualize where the data came from, and how it *flows* through the di
 
 ![Data_Flow](docs/data_flow.png)
 
+## Integration model
+
+Diagram to document how different tables are related to each other.
+
+![Integration_Model](docs/integration_model.png)
+
 ## Details
 
 ### Data directory
