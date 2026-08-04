@@ -1,7 +1,6 @@
 from pyspark.sql import DataFrame
-from pyspark.sql.functions import coalesce, col, current_date, current_timestamp, length, lit, round, substring, trim, try_to_date, upper, when
+from pyspark.sql.functions import col, current_timestamp, round, trim, try_to_date, when
 from pyspark.sql.types import StringType
-from pyspark.sql.window import Window
 
 crm_sales_details_rename_map = {
     "sls_ord_num": "order_number",
@@ -24,6 +23,7 @@ crm_sales_details_type_map = {
     "quantity": "integer",
     "price": "decimal(10,2)"
 }
+
 
 def transform_crm_sales_details(df_bronze: DataFrame) -> DataFrame:
     df_silver = df_bronze.withColumnsRenamed(crm_sales_details_rename_map)

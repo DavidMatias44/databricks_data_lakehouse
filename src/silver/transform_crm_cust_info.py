@@ -22,6 +22,7 @@ crm_cust_info_type_map = {
     "create_date": "date",
 }
 
+
 def transform_crm_cust_info(df_bronze: DataFrame) -> DataFrame:
     df_silver = df_bronze.withColumnsRenamed(crm_cust_info_rename_map)
 

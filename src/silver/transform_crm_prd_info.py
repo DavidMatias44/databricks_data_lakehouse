@@ -1,6 +1,5 @@
 from pyspark.sql import DataFrame
-from pyspark.sql.functions import\
-    coalesce, col, current_timestamp, date_sub, lead, length, lit, substring, trim, upper, when
+from pyspark.sql.functions import coalesce, col, current_timestamp, date_sub, lead, length, lit, substring, trim, upper, when
 from pyspark.sql.types import StringType
 from pyspark.sql.window import Window
 
