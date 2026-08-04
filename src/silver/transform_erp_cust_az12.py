@@ -42,8 +42,8 @@ def transform_erp_cust_az12(df_bronze: DataFrame) -> DataFrame:
         )\
         .withColumn(
             "genre",
-             when((upper(col("genre")) == "F") | (upper(col("genre")) == "FEMALE"), "Female")
-            .when((upper(col("genre")) == "M") | (upper(col("genre")) == "MALE"), "Male")
+             when(upper(col("genre")).isin("F", "FEMALE"), "Female")
+            .when(upper(col("genre")).isin("M", "MALE"), "Male")
             .otherwise("N/A")
         )\
         .withColumn("_cleaned_at", current_timestamp())

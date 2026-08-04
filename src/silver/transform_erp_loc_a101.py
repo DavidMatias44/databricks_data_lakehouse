@@ -31,7 +31,7 @@ def transform_erp_loc_a101(df_bronze: DataFrame) -> DataFrame:
         .withColumn(
             "country",
              when(upper(col("country")) == "DE", "Germany")
-            .when((upper(col("country")) == "USA") | (upper(col("country")) == "US"), "United States")
+            .when(upper(col("country")).isin("USA", "US"), "United States")
             .when((col("country").isNull()) | (col("country") == ""), "N/A")
             .otherwise(col("country"))
         )\
