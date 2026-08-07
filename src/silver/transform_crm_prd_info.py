@@ -1,5 +1,5 @@
 from pyspark.sql import DataFrame
-from pyspark.sql.functions import coalesce, col, current_timestamp, date_sub, lead, length, lit, substring, trim, upper, when
+from pyspark.sql.functions import coalesce, col, current_timestamp, date_sub, lead, length, lit, regexp_replace, substring, trim, upper, when
 from pyspark.sql.types import StringType
 from pyspark.sql.window import Window
 
@@ -40,7 +40,7 @@ def transform_crm_prd_info(df_bronze: DataFrame) -> DataFrame:
 
     df_silver = df_silver.withColumns({
         "product_key": substring(col("product_key"), 7, length(col("product_key"))),
-        "category_id": substring(col("product_key"), 1, 5)
+        "category_id": regexp_replace(substring(col("product_key"), 1, 5), "-", "_")
     })
 
     window_spec = Window.partitionBy("product_key").orderBy("start_date")
