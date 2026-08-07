@@ -5,13 +5,13 @@ from pyspark.sql.types import StringType
 erp_cust_az12_rename_map = {
     "CID": "customer_key",
     "BDATE": "birth_date",
-    "GEN": "genre"
+    "GEN": "gender"
 }
 
 erp_cust_az12_type_map = {
     "customer_key": "string",
     "birth_date": "date",
-    "genre": "string"
+    "gender": "string"
 }
 
 
@@ -41,9 +41,9 @@ def transform_erp_cust_az12(df_bronze: DataFrame) -> DataFrame:
             .otherwise(col("birth_date"))
         )\
         .withColumn(
-            "genre",
-             when(upper(col("genre")).isin("F", "FEMALE"), "Female")
-            .when(upper(col("genre")).isin("M", "MALE"), "Male")
+            "gender",
+             when(upper(col("gender")).isin("F", "FEMALE"), "Female")
+            .when(upper(col("gender")).isin("M", "MALE"), "Male")
             .otherwise("N/A")
         )\
         .withColumn("_cleaned_at", current_timestamp())
