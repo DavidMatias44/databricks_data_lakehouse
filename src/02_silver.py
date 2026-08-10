@@ -22,6 +22,7 @@ def run_silver_pipeline():
             logger.info(f"Bronze table processed successfully. Written into: {silver_schema_path}{table_name}")
         except Exception as e:
             logger.exception(f"Could not process Bronze table: {bronze_schema_path}{table_name}")
+            raise
 
 
 if __name__ == "__main__":

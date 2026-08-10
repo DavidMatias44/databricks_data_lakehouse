@@ -28,6 +28,7 @@ def copy_files_into_volume(src_path: Path = raw_data_path, dst_path: Path = raw_
             logger.info(f"Success!")
     except Error as e:
         logger.exception(f"Unable to copy files due to: {e}")
+        raise
 
 
 if __name__ == "__main__":

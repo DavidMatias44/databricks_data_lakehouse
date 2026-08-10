@@ -31,6 +31,7 @@ def run_bronze_pipeline():
             logger.info(f"File processed successfully. Written into: {bronze_schema_path}{table_name}")
         except Exception as e:
             logger.exception(f"An error occurred while processing file: {raw_file_path}")
+            raise
 
 
 if __name__ == "__main__":
