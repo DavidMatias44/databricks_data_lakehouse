@@ -22,6 +22,12 @@ Diagram to document how different tables are related to each other.
 
 ![Integration_Model](docs/integration_model.png)
 
+## Data model
+
+Diagram to document primary and foreign keys in the gold layer: dimension and fact tables.
+
+![Data_Model](docs/data_model.png)
+
 ## Details
 
 ### Data directory
