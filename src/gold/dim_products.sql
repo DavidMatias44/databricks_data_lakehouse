@@ -14,4 +14,4 @@ SELECT
     CURRENT_TIMESTAMP() AS _created_at
 FROM data_lakehouse.silver.crm_prd_info AS cpi
     LEFT JOIN data_lakehouse.silver.erp_px_cat_g1v2 AS epc ON cpi.category_id = epc.category_id
-WHERE cpi.end_date = '2099-01-01';
+WHERE cpi.is_current = TRUE;
