@@ -3,29 +3,9 @@ from pyspark.sql.functions import coalesce, col, current_timestamp, date_sub, le
 from pyspark.sql.types import StringType
 from pyspark.sql.window import Window
 
-crm_prd_info_rename_map = {
-    "prd_id": "product_id",
-    "prd_key": "product_key",
-    "prd_nm": "name",
-    "prd_cost": "cost",
-    "prd_line": "line",
-    "prd_start_dt": "start_date",
-    "prd_end_dt": "end_date"
-}
 
-crm_prd_info_type_map = {
-    "product_id": "integer",
-    "product_key": "string",
-    "name": "string",
-    "cost": "decimal(10,2)",
-    "line": "string",
-    "start_date": "date",
-    "end_date": "date"
-}
-
-
-def transform_crm_prd_info(df_bronze: DataFrame) -> DataFrame:
-    df_silver = df_bronze.withColumnsRenamed(crm_prd_info_rename_map)
+def transform_crm_prd_info(df_bronze: DataFrame, rename_map: dict[str, str], type_map: dict[str, str]) -> DataFrame:
+    df_silver = df_bronze.withColumnsRenamed(rename_map)
 
     df_silver = df_silver.withColumns({
         field.name: trim(col(field.name)) 
@@ -35,7 +15,7 @@ def transform_crm_prd_info(df_bronze: DataFrame) -> DataFrame:
 
     df_silver = df_silver.withColumns({
         column: col(column).cast(data_type) 
-        for column, data_type in crm_prd_info_type_map.items()
+        for column, data_type in type_map.items()
     })
 
     df_silver = df_silver.withColumns({

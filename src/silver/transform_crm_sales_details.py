@@ -2,31 +2,9 @@ from pyspark.sql import DataFrame
 from pyspark.sql.functions import col, current_timestamp, round, trim, try_to_date, when
 from pyspark.sql.types import StringType
 
-crm_sales_details_rename_map = {
-    "sls_ord_num": "order_number",
-    "sls_prd_key": "product_key",
-    "sls_cust_id": "customer_id",
-    "sls_order_dt": "order_date",
-    "sls_ship_dt": "ship_date",
-    "sls_due_dt": "due_date",
-    "sls_sales": "sales",
-    "sls_quantity": "quantity",
-    "sls_price": "price"
-}
 
-# date columns have special date format
-crm_sales_details_type_map = {
-    "order_number": "string",
-    "product_key": "string",
-    "customer_id": "integer",
-    "sales": "decimal(10,2)",
-    "quantity": "integer",
-    "price": "decimal(10,2)"
-}
-
-
-def transform_crm_sales_details(df_bronze: DataFrame) -> DataFrame:
-    df_silver = df_bronze.withColumnsRenamed(crm_sales_details_rename_map)
+def transform_crm_sales_details(df_bronze: DataFrame, rename_map: dict[str, str], type_map: dict[str, str]) -> DataFrame:
+    df_silver = df_bronze.withColumnsRenamed(rename_map)
 
     df_silver = df_silver.withColumns({
         field.name: trim(col(field.name)) 
@@ -36,7 +14,7 @@ def transform_crm_sales_details(df_bronze: DataFrame) -> DataFrame:
     })
 
     df_silver = df_silver.withColumns({
-        column: col(column).cast(data_type) for column, data_type in crm_sales_details_type_map.items()
+        column: col(column).cast(data_type) for column, data_type in type_map.items()
     })
 
     date_columns = ["order_date", "ship_date", "due_date"]

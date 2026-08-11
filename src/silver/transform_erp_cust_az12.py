@@ -2,21 +2,9 @@ from pyspark.sql import DataFrame
 from pyspark.sql.functions import col, current_date, current_timestamp, length, lit, substring, trim, upper, when
 from pyspark.sql.types import StringType
 
-erp_cust_az12_rename_map = {
-    "CID": "customer_key",
-    "BDATE": "birth_date",
-    "GEN": "gender"
-}
 
-erp_cust_az12_type_map = {
-    "customer_key": "string",
-    "birth_date": "date",
-    "gender": "string"
-}
-
-
-def transform_erp_cust_az12(df_bronze: DataFrame) -> DataFrame:
-    df_silver = df_bronze.withColumnsRenamed(erp_cust_az12_rename_map)
+def transform_erp_cust_az12(df_bronze: DataFrame, rename_map: dict[str, str], type_map: dict[str, str]) -> DataFrame:
+    df_silver = df_bronze.withColumnsRenamed(rename_map)
 
     df_silver = df_silver.withColumns({
         field.name: trim(col(field.name)) 
@@ -26,7 +14,7 @@ def transform_erp_cust_az12(df_bronze: DataFrame) -> DataFrame:
     })
 
     df_silver = df_silver.withColumns({
-        column: col(column).cast(data_type) for column, data_type in erp_cust_az12_type_map.items()
+        column: col(column).cast(data_type) for column, data_type in type_map.items()
     })
 
     df_silver = df_silver\

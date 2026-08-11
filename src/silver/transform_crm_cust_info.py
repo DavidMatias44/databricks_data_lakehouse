@@ -2,29 +2,9 @@ from pyspark.sql import DataFrame
 from pyspark.sql.functions import col, current_timestamp, trim, upper, when
 from pyspark.sql.types import StringType
 
-crm_cust_info_rename_map = {
-    "cst_id": "customer_id",
-    "cst_key": "customer_key",
-    "cst_firstname": "first_name",
-    "cst_lastname": "last_name",
-    "cst_marital_status": "marital_status",
-    "cst_gndr": "gender",
-    "cst_create_date": "create_date"
-}
 
-crm_cust_info_type_map = {
-    "customer_id": "integer",
-    "customer_key": "string",
-    "first_name": "string",
-    "last_name": "string",
-    "marital_status": "string",
-    "gender": "string",
-    "create_date": "date",
-}
-
-
-def transform_crm_cust_info(df_bronze: DataFrame) -> DataFrame:
-    df_silver = df_bronze.withColumnsRenamed(crm_cust_info_rename_map)
+def transform_crm_cust_info(df_bronze: DataFrame, rename_map: dict[str, str], type_map: dict[str, str]) -> DataFrame:
+    df_silver = df_bronze.withColumnsRenamed(rename_map)
 
     df_silver = df_silver.withColumns({
         field.name: trim(col(field.name)) 
@@ -34,7 +14,7 @@ def transform_crm_cust_info(df_bronze: DataFrame) -> DataFrame:
 
     df_silver = df_silver.withColumns({
         column: col(column).cast(data_type)
-        for column, data_type in crm_cust_info_type_map.items()
+        for column, data_type in type_map.items()
     })
 
     df_silver = df_silver\

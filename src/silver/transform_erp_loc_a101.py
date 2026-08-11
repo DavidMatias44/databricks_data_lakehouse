@@ -2,19 +2,9 @@ from pyspark.sql import DataFrame
 from pyspark.sql.functions import col, current_timestamp, regexp_replace, trim, upper, when
 from pyspark.sql.types import StringType
 
-erp_loc_a101_rename_map = {
-    "CID": "customer_key",
-    "CNTRY": "country"
-}
 
-erp_loc_a101_type_map = {
-    "customer_key": "string",
-    "country": "string"
-}
-
-
-def transform_erp_loc_a101(df_bronze: DataFrame) -> DataFrame:
-    df_silver = df_bronze.withColumnsRenamed(erp_loc_a101_rename_map)
+def transform_erp_loc_a101(df_bronze: DataFrame, rename_map: dict[str, str], type_map: dict[str, str]) -> DataFrame:
+    df_silver = df_bronze.withColumnsRenamed(rename_map)
 
     df_silver = df_silver.withColumns({
         field.name: trim(col(field.name)) 
