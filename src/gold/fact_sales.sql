@@ -1,9 +1,8 @@
 CREATE OR REPLACE TABLE data_lakehouse.gold.fact_sales AS
 SELECT
-    MD5(csd.order_number) AS order_sk,
+    csd.order_number,
     dp.product_sk,
     dc.customer_sk,
-    csd.order_number,
     csd.order_date,
     csd.ship_date,
     csd.due_date,
