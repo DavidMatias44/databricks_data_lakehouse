@@ -28,6 +28,12 @@ Diagram to document primary and foreign keys in the gold layer: dimension and fa
 
 ![Data_Model](docs/data_model.png)
 
+## Pipeline orchestration
+
+Databricks Jobs & Pipelines is used to orchestrate the whole pipeline. The DAG below show the details of it:
+
+![Orchestration](docs/orchestration.png)
+
 ## Data catalog
 
 File to help discover and understand the data, specifically the gold layer. Read it here: `docs/data_catalog.md`.
